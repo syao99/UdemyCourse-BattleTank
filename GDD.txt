@@ -1,0 +1,25 @@
+Dev Process:
+- Iterative Loop: World, Tank Controls, Player2, UI, Repeat
+- Each Time: Ask "What's least fun?"
+- Reasonably Limited Scope
+
+Base Rules and Concept:
+- Basic tank shooter game; 3rd person (extra: 1st person mode).
+- Opponent tanks can be AI or human.
+- Map: Use terrain and possibly bases, etc. to provide cover.
+- FFA, Maybe teams?
+- Fine tune: Projectile arc, damage, armor, ammo, ammo pickup and armor repair locations (i.e. a base).
+- Bonus: Separate damage components. (i.e. Disabling engine/weapons.)
+
+Special FX/Experience:
+- Tank components: Separately moving/animated treads, wheels, body, turret, gun, secondary gun?
+- Recoil animation, sounds of engine, gun, secondary, engine, explosions
+- Music?
+- Assets: Meshes, UV's, Textures, Materials
+
+
+Controls:
+WASD/LS: Drive forward/backward, Turn left/right (RELATIVE TO TANK BASE!)
+Mouse/RS: Aim/turn turret
+RT/Left Click: Pew!
+LT/Right Click: Secondary
