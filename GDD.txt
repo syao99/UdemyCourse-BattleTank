@@ -23,3 +23,15 @@ WASD/LS: Drive forward/backward, Turn left/right (RELATIVE TO TANK BASE!)
 Mouse/RS: Aim/turn turret
 RT/Left Click: Pew!
 LT/Right Click: Secondary
+
+
+
+Controls Concept Table:
+Intent                  Manual Control              Fly-by-Wire Control             Actuator(s)
+Forward                 LT/RT for L/R Treads        LS Y-Axis +                     Both Tracks Forward - Same Speed
+Backward/Brake          LB/RB for L/R Treads        LS Y-Axis -                     Both Tracks Backward - Same Speed
+Turn Left               RT/LB                       LS X-Axis +                     Right Track Forward, Left Track Backward
+Turn Right              LT/RB                       LS X-Axis +                     Left Track Forward, Right Track Backward
+Turn Turret             LS X-Axis                   RS X-Axis -                     Only Turret Turns
+Adjust Gun Up/Down      RS Y-Axis                   RS Y-Axis                       Only Gun Moves (Up/Down)
+Fire                    FD (Plus Reload Commands?)  RT                              Recoil Effect?

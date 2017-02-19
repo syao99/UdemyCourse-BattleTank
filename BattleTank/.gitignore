@@ -68,3 +68,9 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Non project-specific content
+*/StarterContent/
+*/GTFreeMaterials/
+*/KiteDemo/
+*/WaterPlane/
