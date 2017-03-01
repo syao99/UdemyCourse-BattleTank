@@ -13,6 +13,7 @@
 void ATankPlayerController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	//UE_LOG(LogTemp, Warning, TEXT("PlayerController Tick"))
+	AimAtCrosshair();
 }
 
 void ATankPlayerController::BeginPlay() {
@@ -34,7 +35,33 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 void ATankPlayerController::AimAtCrosshair() {
 	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation; // out parameter!
+	if (bGetSightRayHitLocation(HitLocation)) {
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *HitLocation.ToString())
+	}
 	// get world location of line trace thru crosshair
 	// if hits object
 		// set controlled tank aim to point
+}
+
+bool ATankPlayerController::bGetSightRayHitLocation(FVector& out_HitLocation) const {
+	//GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+	//	CameraViewPointLocation,
+	//	CameraViewPointRotation
+	//);
+
+	/*
+		
+		get player's camera location
+		get player's camera rotation
+		create ray from player's camera
+		test for collision with actor
+		return collision point
+
+	*/
+
+
+	out_HitLocation = FVector(0.1f);
+	return true;
 }

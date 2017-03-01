@@ -19,9 +19,12 @@ public:
 	virtual void ATankPlayerController::BeginPlay() override;
 	ATank* ATankPlayerController::GetControlledTank() const;
 	void AimAtCrosshair();
+	bool bGetSightRayHitLocation(FVector& out_HitLocation) const;
 
 private:
-	
-	
-	
+	UPROPERTY(EditAnywhere)
+	float SightingRange = 1000.f;
+
+	FVector CameraViewPointLocation;
+	FRotator CameraViewPointRotation;
 };
