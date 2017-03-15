@@ -18,12 +18,22 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void ATankPlayerController::BeginPlay() override;
 	ATank* ATankPlayerController::GetControlledTank() const;
-	void AimAtCrosshair();
-	bool bGetSightRayHitLocation(FVector& out_HitLocation) const;
 
 private:
 	UPROPERTY(EditAnywhere)
 	float SightingRange = 1000.f;
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = 0.5f;
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = 0.5f;
+
+	void AimAtCrosshair();
+
+	bool bGetSightRayHitLocation(FVector& out_HitLocation) const;
+
+	FVector2D GetScreenLocation(int32 ViewportSizeX, int32 ViewportSizeY) const;
 
 	FVector CameraViewPointLocation;
 	FRotator CameraViewPointRotation;
