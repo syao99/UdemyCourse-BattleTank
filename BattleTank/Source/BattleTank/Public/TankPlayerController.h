@@ -29,12 +29,19 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = 0.5f;
 
-	void AimAtCrosshair();
-
-	bool bGetSightRayHitLocation(FVector& out_HitLocation) const;
-
-	FVector2D GetScreenLocation(int32 ViewportSizeX, int32 ViewportSizeY) const;
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 10000000.f; // 10km
 
 	FVector CameraViewPointLocation;
 	FRotator CameraViewPointRotation;
+
+	void AimAtCrosshair();
+
+	bool GetSightRayHitLocation(FVector& out_HitLocation) const;
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	FVector2D GetScreenLocation(int32 ViewportSizeX, int32 ViewportSizeY) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 };
