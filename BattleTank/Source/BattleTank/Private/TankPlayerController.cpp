@@ -38,7 +38,7 @@ void ATankPlayerController::AimAtCrosshair() {
 
 	FVector HitLocation; // out parameter!
 	if (GetSightRayHitLocation(HitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString())
+		GetControlledTank()->AimAt(HitLocation);
 		// TODO: controlled tank needs to aim at HitLocation
 	}
 	// get world location of line trace thru crosshair
@@ -98,7 +98,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		StartLocation,
 		EndLocation,
 		ECollisionChannel::ECC_Visibility
-
 		)) {
 		OutHitLocation = HitResult.Location;
 		return true;
