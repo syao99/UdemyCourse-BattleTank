@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -29,7 +30,6 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	// ...
 }
 
@@ -56,21 +56,21 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		ESuggestProjVelocityTraceOption::DoNotTrace,
 		FCollisionResponseParams::DefaultResponseParam,
 		TArray<AActor*>(),
-		true
+		false
 	);
 	if (bHaveAimingSolution) {
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s Aiming At: %s"), *TankName, *AimDirection.ToString())
+		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming At: %s"), *TankName, *AimDirection.ToString())
 			MoveBarrelTowards(AimDirection);
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet) {
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	Barrel = BarrelToSet;
 }
 
-UStaticMeshComponent* UTankAimingComponent::GetBarrelReference() {
+UTankBarrel* UTankAimingComponent::GetBarrelReference() {
 	return Barrel;
 }
 
@@ -83,10 +83,11 @@ void UTankAimingComponent::MoveBarrelTowards(FRotator RotatorOrientation) {
 	// interpolate range of movement limitations and apply to RotatorOrientation
 
 	// figure out difference between current barrel orientation and destination barrel orientation
-	FRotator CurrentOrientation = Barrel->GetForwardVector().Rotation();
-	UE_LOG(LogTemp, Warning, TEXT("RotatorOrientation: %s"), *CurrentOrientation.ToString())
-	FRotator DeltaOrientation = RotatorOrientation - CurrentOrientation;
+	FRotator CurrentRotator = Barrel->GetForwardVector().Rotation();
+	//UE_LOG(LogTemp, Warning, TEXT("RotatorOrientation: %s"), *CurrentOrientation.ToString())
+	FRotator DestinationRotator = RotatorOrientation - CurrentRotator;
 
+	Barrel->Elevate(5); // degrees per second ToDo: refactor from magic number
 	// given max rotation speed and frame time, figure out how much to move the barrel this frame
 
 
