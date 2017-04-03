@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -10,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; // ToDo: figure out if needed.
 
 	// ...
 }
@@ -41,6 +42,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	*/
 	
 	if (!Barrel) { return; }
+	if (!Turret) { return; }
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Muzzle"));
 	
@@ -72,11 +74,23 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
 UTankBarrel* UTankAimingComponent::GetBarrelReference() {
+	if (!Barrel) { return nullptr; }
 	return Barrel;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
+}
+
+UTankTurret* UTankAimingComponent::GetTurretReference() {
+	if (!Turret) { return nullptr; }
+	return Turret;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector VectorOrientation) {
@@ -88,18 +102,16 @@ void UTankAimingComponent::MoveBarrelTowards(FRotator RotatorOrientation) {
 	// interpolate range of movement limitations and apply to RotatorOrientation
 
 	// figure out difference between current barrel orientation and destination barrel orientation
-	FRotator CurrentRotator = Barrel->GetForwardVector().Rotation();
-	//UE_LOG(LogTemp, Warning, TEXT("RotatorOrientation: %s"), *CurrentOrientation.ToString())
-	FRotator DestinationRotator = RotatorOrientation - CurrentRotator;
+	FRotator CurrentBarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator DestinationRotator = RotatorOrientation - CurrentBarrelRotator;
 
 	Barrel->Elevate(DestinationRotator.Pitch); // degrees per second ToDo: refactor from magic number
+
+	//FRotator CurrentTurretRotator = Turret->GetForwardVector().Rotation();
+	//FRotator DestinationTurretRotator = RotatorOrientation - CurrentTurretRotator;
+
+	Turret->Rotate(DestinationRotator.Yaw);
 	// given max rotation speed and frame time, figure out how much to move the barrel this frame
 
-
 	// draw debug line or something for destination orientation
-
-	// set turret rotation using yaw
-
-	// set barrel elevation using pitch
-
 }

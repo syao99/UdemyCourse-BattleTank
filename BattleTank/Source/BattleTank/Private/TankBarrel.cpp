@@ -4,8 +4,6 @@
 #include "TankBarrel.h"
 
 
-
-
 void UTankBarrel::Elevate(float RelativeSpeed) {
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1.f, 1.f);
 	UE_LOG(LogTemp, Warning, TEXT("Barrel Elevate: %f"), RelativeSpeed)
