@@ -11,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; // ToDo: figure out if needed.
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -24,14 +24,6 @@ void UTankAimingComponent::BeginPlay()
 
 	// ...
 	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	// ...
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
@@ -65,11 +57,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		FString TankName = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming At: %s"), *TankName, *AimDirection.ToString())
 		MoveBarrelTowards(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("Have Aiming Solution"))
+		//UE_LOG(LogTemp, Warning, TEXT("Have Aiming Solution"))
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Does not Have Aiming Solution"))
-		
+		//UE_LOG(LogTemp, Warning, TEXT("Does not Have Aiming Solution"))
 	}
 }
 
