@@ -57,10 +57,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		FString TankName = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming At: %s"), *TankName, *AimDirection.ToString())
 		MoveBarrelTowards(AimDirection);
-		//UE_LOG(LogTemp, Warning, TEXT("Have Aiming Solution"))
+		//UE_LOG(LogTemp, Warning, TEXT("Have Aiming Solution: %s"), *AimDirection.ToString())
 	}
 	else {
-		//UE_LOG(LogTemp, Warning, TEXT("Does not Have Aiming Solution"))
+		/*FVector CameraLocation;
+		FRotator CameraRotation;
+		GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+			CameraLocation, // GetPlayerViewPoint() sets these vars to their values
+			CameraRotation // GetPlayerViewPoint() sets these vars to their values
+		);
+		FVector CameraDirection = CameraRotation.Vector();
+		MoveBarrelTowards(CameraDirection);*/
+		//UE_LOG(LogTemp, Warning, TEXT("Does not Have Aiming Solution: %s"), *CameraDirection.ToString())
 	}
 }
 
