@@ -31,7 +31,9 @@ void ATankPlayerController::BeginPlay() {
 }
 
 ATank* ATankPlayerController::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (ControlledTank) { return ControlledTank; }
+	else { return nullptr; }
 }
 
 void ATankPlayerController::AimAtCrosshair() {

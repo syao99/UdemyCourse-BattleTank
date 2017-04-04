@@ -8,6 +8,8 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class AProjectile;
+class UTankBarrel;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -26,6 +28,8 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	
+
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
@@ -40,6 +44,16 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 100000.f; // default 100m/s TODO: find better default value
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint; // further reading: https://docs.unrealengine.com/latest/INT/API/Runtime/CoreUObject/UObject/TSubclassOf/index.html
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeSeconds = 3;
+
+	UTankBarrel* CurrentBarrel = nullptr;
+
+	float LastFireTime = ReloadTimeSeconds * -1;
 };

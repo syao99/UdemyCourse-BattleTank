@@ -2,6 +2,8 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "Tank.h"
 
 
@@ -31,6 +33,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	CurrentBarrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret* TurretToSet) {
@@ -38,7 +41,20 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) {
 }
 
 void ATank::FirePrimary() {
-	UE_LOG(LogTemp, Warning, TEXT("%f: Firing Main Cannon!"), GetWorld()->GetTimeSeconds())
+	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeSeconds;
+	if (!CurrentBarrel || !isReloaded) { return; }
+	if (isReloaded) {
+		// spawn AProjectile at barrel muzzle socket
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			CurrentBarrel->GetSocketLocation(FName("Muzzle")),
+			CurrentBarrel->GetSocketRotation(FName("Muzzle"))
+		);
+		UE_LOG(LogTemp, Warning, TEXT("%f: Firing Main Cannon! Spawn shell at %s :: %s"), GetWorld()->GetTimeSeconds(), *CurrentBarrel->GetSocketLocation(FName("Muzzle")).ToString(), *CurrentBarrel->GetSocketRotation(FName("Muzzle")).ToString())
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+	}
+	
 }
 
 void ATank::AimAt(FVector HitLocation) {

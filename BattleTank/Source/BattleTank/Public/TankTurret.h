@@ -17,7 +17,7 @@ public:
 	void Rotate(float RelativeSpeed); // relative speed is a multiplier: -1 to 1
 
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MaxDegreesPerSecond = 20;
 	
 };

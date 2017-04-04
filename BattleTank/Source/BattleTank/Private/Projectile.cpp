@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankProjectileMovementComponent.h"
 #include "Projectile.h"
 
 
@@ -9,7 +10,8 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	ProjectileMovementComponent = CreateDefaultSubobject<UTankProjectileMovementComponent>(FName("Projectile Movement"));
+	ProjectileMovementComponent->bAutoActivate = false;
 }
 
 // Called when the game starts or when spawned
@@ -26,3 +28,8 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
+void AProjectile::LaunchProjectile(float LaunchSpeed) {
+	UE_LOG(LogTemp, Warning, TEXT("Projectile Launching At %f"), LaunchSpeed);
+	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector(LaunchSpeed, 0.f, 0.f));
+	ProjectileMovementComponent->Activate();
+}

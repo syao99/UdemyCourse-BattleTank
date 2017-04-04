@@ -10,11 +10,14 @@ void ATankAIController::Tick(float DeltaTime) {
 	auto PlayerTarget = GetPlayerTank();
 	if (PlayerTarget) {
 		GetControlledTank()->AimAt(PlayerTarget->GetActorLocation());
+		GetControlledTank()->FirePrimary();
 	}
 }
 
 ATank* ATankAIController::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (ControlledTank) { return ControlledTank; }
+	else { return nullptr; }
 }
 
 ATank* ATankAIController::GetPlayerTank() const {
@@ -26,23 +29,4 @@ ATank* ATankAIController::GetPlayerTank() const {
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay(); // Call the BeginPlay() method we're inheriting from first!
-	UE_LOG(LogTemp, Warning, TEXT("AIController Begin Play"))
-
-	auto ControlledTank = GetControlledTank();
-	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Current AITank: %s"), *ControlledTank->GetName())
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("No AITank possessed."))
-	}
-	// todo: log player tank acquired
-	// something something if pointer: log GetPlayerTank()
-
-	auto PlayerTank = GetPlayerTank();
-	if (PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Hello Dave. Targeting Player Tank: %s"), *PlayerTank->GetName())
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI Cannot find PlayerTank."))
-	}
 }
