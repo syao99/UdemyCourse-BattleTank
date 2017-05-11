@@ -8,8 +8,9 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
+
 class AProjectile;
-class UTankBarrel;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -33,6 +34,8 @@ public:
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
+	UTankMovementComponent* TankMovementComponent = nullptr;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -54,6 +57,7 @@ private:
 	float ReloadTimeSeconds = 3;
 
 	UTankBarrel* CurrentBarrel = nullptr;
+	UTankTurret* CurrentTurret = nullptr;
 
 	float LastFireTime = ReloadTimeSeconds * -1;
 };
